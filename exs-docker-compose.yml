@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  lancache-exporter:
+    build: .
+    container_name: lancache-exporter
+    restart: unless-stopped
+    ports:
+      - "9877:9877"
+    environment:
+      - LANCACHE_API_URL=http://192.168.20.100:7301
+      - SCRAPE_INTERVAL=30
+      - EXPORTER_PORT=9877
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    external: true   # attach to your existing monitoring network if you have one
+    # If you don't have an external network, comment the line above and uncomment below:
+    # driver: bridge
